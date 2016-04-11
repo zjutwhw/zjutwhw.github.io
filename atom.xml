@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://zjutwhw.github.io/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-11T15:06:00+08:00</updated>
+  <updated>2016-04-11T15:22:03+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,9 +18,15 @@
     <link href="http://zjutwhw.github.io/blog/2016/04/11/First-Post/"/>
     <updated>2016-04-11T22:30:00+08:00</updated>
     <id>http://zjutwhw.github.io/blog/2016/04/11/First-Post</id>
-    <content type="html"><![CDATA[<h2>Blog</h2>
+    <content type="html"><![CDATA[<h2>iOS几个很不错的学习网站</h2>
 
-<p>readme</p>
+<ul>
+<li><a href="http://merowing.info/">http://merowing.info/</a></li>
+<li><a href="http://petersteinberger.com/">http://petersteinberger.com/</a></li>
+<li><a href="http://nshipster.com/">http://nshipster.com/</a></li>
+<li>Octopress搭建： <a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/</a></li>
+</ul>
+
 ]]></content>
   </entry>
   
