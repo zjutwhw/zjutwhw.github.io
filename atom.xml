@@ -4,7 +4,7 @@
   <title><![CDATA[zjutwhw‘s Blog]]></title>
   <link href="http://zjutwhw.github.io/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-11T17:04:51+08:00</updated>
+  <updated>2016-04-11T17:17:49+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
@@ -18,7 +18,7 @@
     <link href="http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite/"/>
     <updated>2016-04-11T22:30:00+08:00</updated>
     <id>http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite</id>
-    <content type="html"><![CDATA[<blockquote><p>iOS几个很不错的学习网站</p></blockquote>
+    <content type="html"><![CDATA[<blockquote><p>最近在整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…</p></blockquote>
 
 <ul>
 <li><a href="http://merowing.info/">http://merowing.info/</a></li>
@@ -27,8 +27,6 @@
 <li>Octopress搭建： <a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/</a></li>
 </ul>
 
-
-<p>最近在整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新&hellip;</p>
 ]]></content>
   </entry>
   
