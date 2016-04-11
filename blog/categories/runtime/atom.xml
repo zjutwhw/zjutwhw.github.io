@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: runtime | zjutwhw 技术博客]]></title>
+  <link href="http://zjutwhw.github.io/blog/categories/runtime/atom.xml" rel="self"/>
+  <link href="http://zjutwhw.github.io/"/>
+  <updated>2016-04-11T17:49:51+08:00</updated>
+  <id>http://zjutwhw.github.io/</id>
+  <author>
+    <name><![CDATA[zjutwhw]]></name>
+    <email><![CDATA[zjutwhw@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[利用runtime减少线上Crash]]></title>
+    <link href="http://zjutwhw.github.io/blog/2016/04/11/hook-crash/"/>
+    <updated>2016-04-11T17:33:39+08:00</updated>
+    <id>http://zjutwhw.github.io/blog/2016/04/11/hook-crash</id>
+    <content type="html"><![CDATA[<h3>OC消息转发机制</h3>
+
+<blockquote><p>小萝莉说Crash：<a href="http://bugly.qq.com/blog/?p=64">http://bugly.qq.com/blog/?p=64</a>
+理解消息传递机制 ：<a href="https://www.zybuluo.com/MicroCai/note/64270">https://www.zybuluo.com/MicroCai/note/64270</a></p></blockquote>
+
+<h4>动态绑定 &amp; 静态绑定 理解</h4>
+
+<pre><code>#import &lt;stdio.h&gt;
+void printHello() {
+    printf("Hello, world!\n");
+}
+void printGoodbye() {
+    printf("Goodbye, world!\n");
+}
+void testStaticBinding(int type) 
+{
+    if (type == 0) {
+        printHello();  //静态
+    } else {
+        printGoodbye(); //静态绑定：在编译阶段可以直接将函数名硬编码成地址，生成调用指令
+    }
+    return 0;
+}
+void testDynamicBbinding(int type) 
+{
+    void (*func)();
+    if (type == 0) {
+        func = printHello; //动态
+    } else {
+        func = printGoodbye; //动态绑定：将函数调用从编译期推迟到了运行时
+    }
+    func();
+    return 0;
+}
+</code></pre>
+
+<p>Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:<code>id returnValue = [someObject messageName:parameter];</code> 等同于 <code>id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);</code>
+动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。</p>
+
+<h3>消息转发</h3>
+
+<blockquote><p>若是找到对应函数就跳转到实现代码，若找不到，就沿着继承链往上查找，直到找到相应的实现代码为止。若最终还是没找到实现代码，说明当前对象无法响应此消息，接下来就会执行 消息转发 操作，以试图找到一个能响应此消息的对象。</p></blockquote>
+
+<p>消息转发分为三大阶段</p>
+
+<ul>
+<li>第一阶段先征询消息接收者所属的类，看其是否能动态添加方法，以处理当前这个无法响应的 selector，这叫做 <code>动态方法解析</code>（dynamic method resolution）。如果运行期系统（runtime system） 第一阶段执行结束，接收者就无法再以动态新增方法的手段来响应消息，进入第二阶段。</li>
+</ul>
+
+
+<pre><code>/**
+ *  如果尚未实现的方法是实例方法，则调用此函数
+ *
+ *  @param selector 未处理的方法
+ *
+ *  @return 返回布尔值，表示是否能新增实例方法用以处理selector
+ */
++ (BOOL)resolveInstanceMethod:(SEL)selector;
+/**
+ *  如果尚未实现的方法是类方法，则调用此函数
+ *
+ *  @param selector 未处理的方法
+ *
+ *  @return 返回布尔值，表示是否能新增类方法用以处理selector
+ */
++ (BOOL)resolveClassMethod:(SEL)selector;
+</code></pre>
+
+<p>方法返回布尔类型，表示是否能新增一个方法来处理 selector，此方案通常用来实现 @dynamic 属性。也可使用虚代理者来处理。</p>
+
+<pre><code>/************** 使用 resolveInstanceMethod 实现 @dynamic 属性 **************/
+id autoDictionaryGetter(id self, SEL _cmd);
+void autoDictionarySetter(id self, SEL _cmd, id value);
++ (BOOL)resolveInstanceMethod:(SEL)selector
+{
+    NSString *selectorString = NSStringFromSelector(selector);
+    if (/* selector is from a @dynamic property */)
+    {
+        if ([selectorString hasPrefix:@"set"])
+        {
+            // 添加 setter 方法
+            class_addMethod(self, selector, (IMP)autoDictionarySetter, "v@:@");
+        }
+        else
+        {
+            // 添加 getter 方法
+            class_addMethod(self, selector, (IMP)autoDictionaryGetter, "@@:");
+        }
+        return YES;
+    }
+    return [super resolveInstanceMethod:selector];
+}
+</code></pre>
+
+<ul>
+<li>第二阶段看看有没有其他对象,<code>备援接收者</code>（replacement receiver）能处理此消息。如果有，运行期系统会把消息转发给那个对象，转发过程结束；如果没有，则启动完整的消息转发机制。</li>
+</ul>
+
+
+<pre><code>/**
+ *  此方法询问是否能将消息转给其他接收者来处理
+ *
+ *  @param aSelector 未处理的方法
+ *
+ *  @return 如果当前接收者能找到备援对象，就将其返回；否则返回nil；
+ */
+- (id)forwardingTargetForSelector:(SEL)aSelector;
+</code></pre>
+
+<ul>
+<li><p>第三阶段 <code>完整的消息转发机制</code>。运行期系统会把与消息有关的全部细节都封装到 NSInvocation 对象中，再给接收者最后一次机会，令其设法解决当前还未处理的消息。</p>
+
+<p>  如果前面两步都无法处理消息，就会启动完整的消息转发机制。首先创建 NSInvocation 对象，把尚未处理的那条消息有关的全部细节装在里面，在触发 NSInvocation 对象时，消息派发系统（message-dispatch system）将会把消息指派给目标对象。对应的方法为</p></li>
+</ul>
+
+
+<pre><code>/**
+ *  消息派发系统通过此方法，将消息派发给目标对象
+ *
+ *  @param anInvocation 之前创建的NSInvocation实例对象，用于装载有关消息的所有内容
+ */
+- (void)forwardInvocation:(NSInvocation *)anInvocation;
+</code></pre>
+
+<p><img src="./runtimeMethod.png" alt="" /></p>
+
+<h3>Crash拦截</h3>
+
+<ul>
+<li>利用上述OC的动态语音的特性，可以实现NSInvalidArgumentException错误问题unrecognized selector sent to instance xxxx的拦截，只需要在上述三个环节任意处处理该selector，并将对于的selector上报错误日志，则可以拦截Crash，并知道对应的Crash信息。</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

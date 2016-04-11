@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: ios | zjutwhw‘s Blog]]></title>
+  <title><![CDATA[Category: ios | zjutwhw 技术博客]]></title>
   <link href="http://zjutwhw.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-11T17:17:49+08:00</updated>
+  <updated>2016-04-11T17:49:51+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
-    
+    <email><![CDATA[zjutwhw@gmail.com]]></email>
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 

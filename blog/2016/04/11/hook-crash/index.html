@@ -1,41 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[zjutwhw 技术博客]]></title>
-  <link href="http://zjutwhw.github.io/atom.xml" rel="self"/>
-  <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-11T17:49:51+08:00</updated>
-  <id>http://zjutwhw.github.io/</id>
-  <author>
-    <name><![CDATA[zjutwhw]]></name>
-    <email><![CDATA[zjutwhw@gmail.com]]></email>
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE HTML>
 
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>利用runtime减少线上Crash - zjutwhw 技术博客</title>
+	<meta name="author" content="zjutwhw">
+
+	
+	<meta name="description" content="利用runtime减少线上Crash OC消息转发机制 小萝莉说Crash：http://bugly.qq.com/blog/?p=64
+理解消息传递机制 ：https://www.zybuluo.com/MicroCai/note/64270 动态绑定 &amp; 静态绑定 理解 1
+2
+3 &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="zjutwhw 技术博客" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://zjutwhw.github.io/blog/2016/04/11/hook-crash/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
   
-  <entry>
-    <title type="html"><![CDATA[iOS几个很不错的学习网站]]></title>
-    <link href="http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite/"/>
-    <updated>2016-04-11T22:30:00+08:00</updated>
-    <id>http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite</id>
-    <content type="html"><![CDATA[<blockquote><p>最近在整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…</p></blockquote>
 
-<ul>
-<li><a href="http://merowing.info/">http://merowing.info/</a></li>
-<li><a href="http://petersteinberger.com/">http://petersteinberger.com/</a></li>
-<li><a href="http://nshipster.com/">http://nshipster.com/</a></li>
-<li>Octopress搭建： <a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/</a></li>
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("zjutwhw@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+
+<nav id="main-nav"><ul class="main">
+    <li><a href="/">Blog</a></li>
+    <li><a href="http://about.me/shashankmehta">About</a></li>
+    <li><a href="/blog/archives">Archives</a></li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[利用runtime减少线上Crash]]></title>
-    <link href="http://zjutwhw.github.io/blog/2016/04/11/hook-crash/"/>
-    <updated>2016-04-11T17:33:39+08:00</updated>
-    <id>http://zjutwhw.github.io/blog/2016/04/11/hook-crash</id>
-    <content type="html"><![CDATA[<h3>OC消息转发机制</h3>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+			<a class="email" href="mailto:zjutwhw@gmail.com" title="Email">Email</a>
+		
+		
+		
+		
+		
+			<a class="github" href="https://github.com/zjutwhw" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">利用runtime减少线上Crash</h1>
+	<div class="entry-content" itemprop="articleBody"><h3>OC消息转发机制</h3>
 
 <blockquote><p>小萝莉说Crash：<a href="http://bugly.qq.com/blog/?p=64">http://bugly.qq.com/blog/?p=64</a>
 理解消息传递机制 ：<a href="https://www.zybuluo.com/MicroCai/note/64270">https://www.zybuluo.com/MicroCai/note/64270</a></p></blockquote>
@@ -246,7 +303,43 @@
 <li>利用上述OC的动态语音的特性，可以实现NSInvalidArgumentException错误问题unrecognized selector sent to instance xxxx的拦截，只需要在上述三个环节任意处处理该selector，并将对于的selector上报错误日志，则可以拦截Crash，并知道对应的Crash信息。</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-</feed>
+</div>
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2016
+
+    zjutwhw
+
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+		</div>
+	</div>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>
