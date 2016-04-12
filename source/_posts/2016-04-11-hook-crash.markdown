@@ -8,10 +8,15 @@ categories: "runtime"
 
 ### OC消息转发机制
 
-> 小萝莉说Crash：http://bugly.qq.com/blog/?p=64
+> 小萝莉说Crash：http://bugly.qq.com/blog/?p=64 
 > 理解消息传递机制 ：https://www.zybuluo.com/MicroCai/note/64270
 
 #### 动态绑定 & 静态绑定 理解
+
+Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:`id returnValue = [someObject messageName:parameter]; ` 等同于 `id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);`
+动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。
+
+<!--more-->
 
 ```
 #import <stdio.h>
@@ -42,8 +47,6 @@ void testDynamicBbinding(int type)
     return 0;
 }
 ```
-Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:`id returnValue = [someObject messageName:parameter]; ` 等同于 `id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);`
-动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。
 
 ### 消息转发
 
@@ -123,8 +126,7 @@ void autoDictionarySetter(id self, SEL _cmd, id value);
  */
 - (void)forwardInvocation:(NSInvocation *)anInvocation;
 ```
-
-![](./runtimeMethod.png)
+![](/images/runtimeMethod.png)
 
 ### Crash拦截
 
