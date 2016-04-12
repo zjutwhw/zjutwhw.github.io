@@ -1,0 +1,349 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>利用runtime减少线上Crash - zjutwhw 技术博客</title>
+	<meta name="author" content="zjutwhw">
+
+	
+	<meta name="description" content="利用runtime减少线上Crash OC消息转发机制 小萝莉说Crash：http://bugly.qq.com/blog/?p=64
+理解消息传递机制 ：https://www.zybuluo.com/MicroCai/note/64270 动态绑定 &amp; 静态绑定 理解 &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="zjutwhw 技术博客" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://zjutwhw.github.io/blog/2016/04/11/hook-crash/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+  
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://tp1.sinaimg.cn/2436392740/180/5744173726/1' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+	
+</div>
+
+<nav id="main-nav"><ul class="main">
+    <li><a href="/">zjutwhw博客</a></li>
+    <p class="subtitle"><br><p>keep it simple and stupid!<br>donot repeat yourself!</p>
+    <li><a href="/blog/archives">所有文章</a></li>
+    <li><a href="https://github.com/zjutwhw">关于我</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+			<a class="email" href="mailto:zjutwhw@gmail.com" title="Email">Email</a>
+		
+		
+		
+		
+		
+			<a class="github" href="https://github.com/zjutwhw" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+    	
+    	
+			<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">利用runtime减少线上Crash</h1>
+	<div class="entry-content" itemprop="articleBody"><h3>OC消息转发机制</h3>
+
+<blockquote><p>小萝莉说Crash：<a href="http://bugly.qq.com/blog/?p=64">http://bugly.qq.com/blog/?p=64</a>
+理解消息传递机制 ：<a href="https://www.zybuluo.com/MicroCai/note/64270">https://www.zybuluo.com/MicroCai/note/64270</a></p></blockquote>
+
+<h4>动态绑定 &amp; 静态绑定 理解</h4>
+
+<p>Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:<code>id returnValue = [someObject messageName:parameter];</code> 等同于 <code>id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);</code>
+动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。</p>
+
+<!--more-->
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#import &lt;stdio.h&gt;
+</span><span class='line'>void printHello() {
+</span><span class='line'>    printf("Hello, world!\n");
+</span><span class='line'>}
+</span><span class='line'>void printGoodbye() {
+</span><span class='line'>    printf("Goodbye, world!\n");
+</span><span class='line'>}
+</span><span class='line'>void testStaticBinding(int type) 
+</span><span class='line'>{
+</span><span class='line'>    if (type == 0) {
+</span><span class='line'>        printHello();  //静态
+</span><span class='line'>    } else {
+</span><span class='line'>        printGoodbye(); //静态绑定：在编译阶段可以直接将函数名硬编码成地址，生成调用指令
+</span><span class='line'>    }
+</span><span class='line'>    return 0;
+</span><span class='line'>}
+</span><span class='line'>void testDynamicBbinding(int type) 
+</span><span class='line'>{
+</span><span class='line'>    void (*func)();
+</span><span class='line'>    if (type == 0) {
+</span><span class='line'>        func = printHello; //动态
+</span><span class='line'>    } else {
+</span><span class='line'>        func = printGoodbye; //动态绑定：将函数调用从编译期推迟到了运行时
+</span><span class='line'>    }
+</span><span class='line'>    func();
+</span><span class='line'>    return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>消息转发</h3>
+
+<blockquote><p>若是找到对应函数就跳转到实现代码，若找不到，就沿着继承链往上查找，直到找到相应的实现代码为止。若最终还是没找到实现代码，说明当前对象无法响应此消息，接下来就会执行 消息转发 操作，以试图找到一个能响应此消息的对象。</p></blockquote>
+
+<p>消息转发分为三大阶段</p>
+
+<ul>
+<li>第一阶段先征询消息接收者所属的类，看其是否能动态添加方法，以处理当前这个无法响应的 selector，这叫做 <code>动态方法解析</code>（dynamic method resolution）。如果运行期系统（runtime system） 第一阶段执行结束，接收者就无法再以动态新增方法的手段来响应消息，进入第二阶段。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/**
+</span><span class='line'> *  如果尚未实现的方法是实例方法，则调用此函数
+</span><span class='line'> *
+</span><span class='line'> *  @param selector 未处理的方法
+</span><span class='line'> *
+</span><span class='line'> *  @return 返回布尔值，表示是否能新增实例方法用以处理selector
+</span><span class='line'> */
+</span><span class='line'>+ (BOOL)resolveInstanceMethod:(SEL)selector;
+</span><span class='line'>/**
+</span><span class='line'> *  如果尚未实现的方法是类方法，则调用此函数
+</span><span class='line'> *
+</span><span class='line'> *  @param selector 未处理的方法
+</span><span class='line'> *
+</span><span class='line'> *  @return 返回布尔值，表示是否能新增类方法用以处理selector
+</span><span class='line'> */
+</span><span class='line'>+ (BOOL)resolveClassMethod:(SEL)selector;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>方法返回布尔类型，表示是否能新增一个方法来处理 selector，此方案通常用来实现 @dynamic 属性。也可使用虚代理者来处理。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/************** 使用 resolveInstanceMethod 实现 @dynamic 属性 **************/
+</span><span class='line'>id autoDictionaryGetter(id self, SEL _cmd);
+</span><span class='line'>void autoDictionarySetter(id self, SEL _cmd, id value);
+</span><span class='line'>+ (BOOL)resolveInstanceMethod:(SEL)selector
+</span><span class='line'>{
+</span><span class='line'>    NSString *selectorString = NSStringFromSelector(selector);
+</span><span class='line'>    if (/* selector is from a @dynamic property */)
+</span><span class='line'>    {
+</span><span class='line'>        if ([selectorString hasPrefix:@"set"])
+</span><span class='line'>        {
+</span><span class='line'>            // 添加 setter 方法
+</span><span class='line'>            class_addMethod(self, selector, (IMP)autoDictionarySetter, "v@:@");
+</span><span class='line'>        }
+</span><span class='line'>        else
+</span><span class='line'>        {
+</span><span class='line'>            // 添加 getter 方法
+</span><span class='line'>            class_addMethod(self, selector, (IMP)autoDictionaryGetter, "@@:");
+</span><span class='line'>        }
+</span><span class='line'>        return YES;
+</span><span class='line'>    }
+</span><span class='line'>    return [super resolveInstanceMethod:selector];
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>第二阶段看看有没有其他对象,<code>备援接收者</code>（replacement receiver）能处理此消息。如果有，运行期系统会把消息转发给那个对象，转发过程结束；如果没有，则启动完整的消息转发机制。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/**
+</span><span class='line'> *  此方法询问是否能将消息转给其他接收者来处理
+</span><span class='line'> *
+</span><span class='line'> *  @param aSelector 未处理的方法
+</span><span class='line'> *
+</span><span class='line'> *  @return 如果当前接收者能找到备援对象，就将其返回；否则返回nil；
+</span><span class='line'> */
+</span><span class='line'>- (id)forwardingTargetForSelector:(SEL)aSelector;</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>第三阶段 <code>完整的消息转发机制</code>。运行期系统会把与消息有关的全部细节都封装到 NSInvocation 对象中，再给接收者最后一次机会，令其设法解决当前还未处理的消息。</p>
+
+<p>  如果前面两步都无法处理消息，就会启动完整的消息转发机制。首先创建 NSInvocation 对象，把尚未处理的那条消息有关的全部细节装在里面，在触发 NSInvocation 对象时，消息派发系统（message-dispatch system）将会把消息指派给目标对象。对应的方法为</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/**
+</span><span class='line'> *  消息派发系统通过此方法，将消息派发给目标对象
+</span><span class='line'> *
+</span><span class='line'> *  @param anInvocation 之前创建的NSInvocation实例对象，用于装载有关消息的所有内容
+</span><span class='line'> */
+</span><span class='line'>- (void)forwardInvocation:(NSInvocation *)anInvocation;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/images/runtimeMethod.png" alt="" /></p>
+
+<h3>Crash拦截</h3>
+
+<ul>
+<li>利用上述OC的动态语音的特性，可以实现NSInvalidArgumentException错误问题unrecognized selector sent to instance xxxx的拦截，只需要在上述三个环节任意处处理该selector，并将对于的selector上报错误日志，则可以拦截Crash，并知道对应的Crash信息。</li>
+</ul>
+
+</div>
+
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+
+</div>
+			</div>
+			<footer id="footer" class="inner">Copyright &copy; 2016
+
+    zjutwhw
+
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+		</div>
+	</div>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+</body>
+</html>
