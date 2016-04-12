@@ -10,9 +10,7 @@
 
 	
 	<meta name="description" content="利用runtime减少线上Crash OC消息转发机制 小萝莉说Crash：http://bugly.qq.com/blog/?p=64
-理解消息传递机制 ：https://www.zybuluo.com/MicroCai/note/64270 动态绑定 &amp; 静态绑定 理解 1
-2
-3 &hellip;">
+理解消息传递机制 ：https://www.zybuluo.com/MicroCai/note/64270 动态绑定 &amp; 静态绑定 理解 &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -51,9 +49,10 @@
 </div>
 
 <nav id="main-nav"><ul class="main">
-    <li><a href="/">Blog</a></li>
-    <li><a href="http://about.me/shashankmehta">About</a></li>
-    <li><a href="/blog/archives">Archives</a></li>
+    <li><a href="/">zjutwhw博客</a></li>
+    <p class="subtitle"><br><p>keep it simple and stupid!<br>donot repeat yourself!</p>
+    <li><a href="/blog/archives">所有文章</a></li>
+    <li><a href="https://github.com/zjutwhw">关于我</a></li>
 </ul>
 </nav>
 <nav id="sub-nav">
@@ -98,6 +97,14 @@
 理解消息传递机制 ：<a href="https://www.zybuluo.com/MicroCai/note/64270">https://www.zybuluo.com/MicroCai/note/64270</a></p></blockquote>
 
 <h4>动态绑定 &amp; 静态绑定 理解</h4>
+
+<p>Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:<code>id returnValue = [someObject messageName:parameter];</code> 等同于 <code>id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);</code>
+动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。</p>
+
+<!--more-->
+
+
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -154,9 +161,6 @@
 </span><span class='line'>    return 0;
 </span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-
-<p>Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:<code>id returnValue = [someObject messageName:parameter];</code> 等同于 <code>id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);</code>
-动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。</p>
 
 <h3>消息转发</h3>
 
@@ -295,7 +299,7 @@
 </span><span class='line'>- (void)forwardInvocation:(NSInvocation *)anInvocation;</span></code></pre></td></tr></table></div></figure>
 
 
-<p><img src="./runtimeMethod.png" alt="" /></p>
+<p><img src="/images/runtimeMethod.png" alt="" /></p>
 
 <h3>Crash拦截</h3>
 

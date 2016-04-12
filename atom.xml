@@ -4,7 +4,7 @@
   <title><![CDATA[zjutwhw 技术博客]]></title>
   <link href="http://zjutwhw.github.io/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-11T17:56:28+08:00</updated>
+  <updated>2016-04-12T10:36:09+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
@@ -12,23 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[iOS几个很不错的学习网站]]></title>
-    <link href="http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite/"/>
-    <updated>2016-04-11T22:30:00+08:00</updated>
-    <id>http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite</id>
-    <content type="html"><![CDATA[<blockquote><p>最近在整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…</p></blockquote>
-
-<ul>
-<li><a href="http://merowing.info/">http://merowing.info/</a></li>
-<li><a href="http://petersteinberger.com/">http://petersteinberger.com/</a></li>
-<li><a href="http://nshipster.com/">http://nshipster.com/</a></li>
-<li>Octopress搭建： <a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/</a></li>
-</ul>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[利用runtime减少线上Crash]]></title>
@@ -41,6 +24,14 @@
 理解消息传递机制 ：<a href="https://www.zybuluo.com/MicroCai/note/64270">https://www.zybuluo.com/MicroCai/note/64270</a></p></blockquote>
 
 <h4>动态绑定 &amp; 静态绑定 理解</h4>
+
+<p>Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:<code>id returnValue = [someObject messageName:parameter];</code> 等同于 <code>id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);</code>
+动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。</p>
+
+<!--more-->
+
+
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -97,9 +88,6 @@
 </span><span class='line'>    return 0;
 </span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-
-<p>Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:<code>id returnValue = [someObject messageName:parameter];</code> 等同于 <code>id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);</code>
-动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。</p>
 
 <h3>消息转发</h3>
 
@@ -238,13 +226,35 @@
 </span><span class='line'>- (void)forwardInvocation:(NSInvocation *)anInvocation;</span></code></pre></td></tr></table></div></figure>
 
 
-<p><img src="./runtimeMethod.png" alt="" /></p>
+<p><img src="http://zjutwhw.github.io/images/runtimeMethod.png" alt="" /></p>
 
 <h3>Crash拦截</h3>
 
 <ul>
 <li>利用上述OC的动态语音的特性，可以实现NSInvalidArgumentException错误问题unrecognized selector sent to instance xxxx的拦截，只需要在上述三个环节任意处处理该selector，并将对于的selector上报错误日志，则可以拦截Crash，并知道对应的Crash信息。</li>
 </ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS几个很不错的学习网站]]></title>
+    <link href="http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite/"/>
+    <updated>2016-04-11T15:07:13+08:00</updated>
+    <id>http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite</id>
+    <content type="html"><![CDATA[<blockquote><p>最近在重新整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…</p></blockquote>
+
+<ul>
+<li><a href="http://merowing.info/">http://merowing.info/</a></li>
+<li><a href="http://petersteinberger.com/">http://petersteinberger.com/</a></li>
+<li><a href="http://nshipster.com/">http://nshipster.com/</a></li>
+<li>Octopress搭建： <a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/</a></li>
+</ul>
+
+
+<!--more-->
+
+
 
 ]]></content>
   </entry>
