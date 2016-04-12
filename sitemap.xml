@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://zjutwhw.github.io/blog/2016/04/12/thread/</loc>
+<lastmod>2016-04-12T17:33:39+08:00</lastmod>
+</url>
+<url>
 <loc>http://zjutwhw.github.io/blog/2016/04/11/hook-crash/</loc>
 <lastmod>2016-04-11T17:33:39+08:00</lastmod>
 </url>
@@ -22,5 +26,8 @@
 </url>
 <url>
 <loc>http://zjutwhw.github.io/blog/categories/runtime/</loc>
+</url>
+<url>
+<loc>http://zjutwhw.github.io/blog/categories/iosduo-xian-cheng/</loc>
 </url>
 </urlset>
