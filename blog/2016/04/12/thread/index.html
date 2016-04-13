@@ -9,7 +9,7 @@
 	<meta name="author" content="zjutwhw">
 
 	
-	<meta name="description" content="iOS多线程-线程锁（一） A.线程安全 1.信号量来加锁 创建信号量，可以设置信号量的资源数。
+	<meta name="description" content="iOS多线程-线程锁（一） 线程安全 A.信号量来加锁 1.创建信号量，可以设置信号量的资源数。
 dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资源， &hellip;">
 	
 
@@ -49,8 +49,8 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 </div>
 
 <nav id="main-nav"><ul class="main">
-    <li><a href="/">zjutwhw博客</a></li>
-    <p class="subtitle"><br><p>keep it simple and stupid!<br>donot repeat yourself!</p>
+    <li><h2 href="/">zjutwhw博客</h2></li>
+    <p class="subtitle"><br><p>Keep hungry and keep stupid!<br>Donot repeat yourself!</p>
     <li><a href="/blog/archives">所有文章</a></li>
     <li><a href="https://github.com/zjutwhw">关于我</a></li>
 </ul>
@@ -91,30 +91,21 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 	<h1 class="title" itemprop="name">iOS多线程-线程锁（一）</h1>
-	<div class="entry-content" itemprop="articleBody"><p><strong>A.线程安全</strong></p>
+	<div class="entry-content" itemprop="articleBody"><p><strong>线程安全</strong></p>
 
-<p><strong>1.信号量来加锁</strong></p>
+<p><strong>A.信号量来加锁</strong></p>
 
 <ul>
-<li><ol type="a">
-<li>创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></li>
-</ol>
-
+<li><p>1.创建信号量，可以设置信号量的资源数。
+<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
 
 <p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><ol type="a">
-<li>等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></li>
-</ol>
-
+<li><p>2.等待信号，可以设置超时参数。
+<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
 
 <p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><ol type="a">
-<li>通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></li>
-</ol>
-
+<li><p>3.通知信号
+<code>dispatch_semaphore_signal(semaphore);</code></p>
 
 <p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
 </ul>
@@ -124,10 +115,7 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 
 
 <ul>
-<li><ol type="a">
-<li>Demo ：生产 - 消费</li>
-</ol>
-</li>
+<li>4.Demo ：生产 - 消费</li>
 </ul>
 
 
@@ -172,10 +160,7 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 
 
 <ul>
-<li><ol type="a">
-<li>Demo 多线程加锁</li>
-</ol>
-</li>
+<li>5.Demo 多线程加锁</li>
 </ul>
 
 
@@ -230,25 +215,16 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><strong>2.dispatch组（dispatch group）</strong></p>
+<p><strong>B.dispatch组（dispatch group）</strong></p>
 
 <ul>
-<li><ol type="a">
-<li>创建dispatch组
-<code>dispatch_group_t group = dispatch_group_create();</code></li>
-</ol>
-</li>
-<li><ol type="a">
-<li>启动异步block到dispatch队列中，并关联到group中</li>
-</ol>
-
+<li><p>1.创建dispatch组
+<code>dispatch_group_t group = dispatch_group_create();</code></p></li>
+<li><p>2.启动异步block到dispatch队列中，并关联到group中</p>
 
 <p>  dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
   dispatch_group_async(group, queue, ^{ //异步执行block });</p></li>
-<li><ol type="a">
-<li>阻塞当前线程，设置等待group关联的block执行的超时时间</li>
-</ol>
-</li>
+<li><p>3.阻塞当前线程，设置等待group关联的block执行的超时时间</p></li>
 </ul>
 
 
@@ -256,16 +232,10 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 <code>dispatch_group_notify(group, dispatch_get_main_queue(), ^{ //执行完的回调block });</code> //设置等待group关联的block执行完的回调的block</p>
 
 <ul>
-<li><ol type="a">
-<li>手动管理关联group的block的运行状态 （相当于引用计数）
+<li><p>4.手动管理关联group的block的运行状态 （相当于引用计数）
 <code>dispatch_group_enter(group);</code>  // 进入group +1；
-<code>dispatch_group_leave(group);</code>  // 退出group -1；</li>
-</ol>
-</li>
-<li><ol type="a">
-<li>Demo 以下两种方式是等价的</li>
-</ol>
-</li>
+<code>dispatch_group_leave(group);</code>  // 退出group -1；</p></li>
+<li><p>5.Demo 以下两种方式是等价的</p></li>
 </ul>
 
 
@@ -295,7 +265,7 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 </span><span class='line'>dispatch_group_notify(group, dispatch_get_main_queue(), ^{ //执行完的回调block });</span></code></pre></td></tr></table></div></figure>
 
 
-<p><strong>3.<code>dispatch_barrier_async</code> （barrier：栅栏）</strong></p>
+<p><strong>C.<code>dispatch_barrier_async</code> （barrier：栅栏）</strong></p>
 
 <p><code>dispatch_barrier_async</code>是在前面的任务执行结束后它才执行，而且它后面的任务等它执行完成之后才会执行</p>
 
