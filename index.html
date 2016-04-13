@@ -9,7 +9,7 @@
 	<meta name="author" content="zjutwhw">
 
 	
-	<meta name="description" content="Apr 12 2016 ios多线程 Test 文章分页 线程安全 A.信号量来加锁 1.创建信号量，可以设置信号量的资源数。
+	<meta name="description" content="Apr 12 2016 ios多线程 iOS多线程-线程锁（一） 线程安全 A.信号量来加锁 1.创建信号量，可以设置信号量的资源数。
 dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资源， &hellip;">
 	
 
@@ -117,7 +117,7 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 </div>
 		
 	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread9/" itemprop="url">Test 文章分页</a></h1>
+	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread/" itemprop="url">iOS多线程-线程锁（一）</a></h1>
 	<div class="entry-content" itemprop="articleBody">
 		<p><strong>线程安全</strong></p>
 
@@ -141,7 +141,7 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 
 
 		
-		<a href="/blog/2016/04/12/thread9/" class="more-link">继续阅读 &rarr;</a>
+		<a href="/blog/2016/04/12/thread/" class="more-link">继续阅读 &rarr;</a>
 	</div>
 
 </article>
@@ -161,41 +161,31 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
   
 
 
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
+<time datetime="2016-04-11T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 11 2016</time></div>
 		<div class="tags">
 
 
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
+	<a class='category' href='/blog/categories/runtime/'>runtime</a>
 
 
 </div>
 		
 	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread8/" itemprop="url">Test 文章分页</a></h1>
+	<h1 class="title" itemprop="name"><a href="/blog/2016/04/11/hook-crash/" itemprop="url">利用runtime减少线上Crash</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
+		<h3>OC消息转发机制</h3>
 
-<p><strong>A.信号量来加锁</strong></p>
+<blockquote><p>小萝莉说Crash：<a href="http://bugly.qq.com/blog/?p=64">http://bugly.qq.com/blog/?p=64</a>
+理解消息传递机制 ：<a href="https://www.zybuluo.com/MicroCai/note/64270">https://www.zybuluo.com/MicroCai/note/64270</a></p></blockquote>
 
-<ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
+<h4>动态绑定 &amp; 静态绑定 理解</h4>
 
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
-</ul>
-
+<p>Objective-C为一门动态的语言，OC中的方法调用是利用消息传递实现的:<code>id returnValue = [someObject messageName:parameter];</code> 等同于 <code>id returnValue = objc_msgSend(someObject,@selector(messageName:),parameter);</code>
+动态绑定：当进行消息传递，对象在响应消息时，是通过 SEL 在 methodlist 中查找函数指针 IMP，找到后直接通过指针调用函数。</p>
 
 
 		
-		<a href="/blog/2016/04/12/thread8/" class="more-link">继续阅读 &rarr;</a>
+		<a href="/blog/2016/04/11/hook-crash/" class="more-link">继续阅读 &rarr;</a>
 	</div>
 
 </article>
@@ -215,419 +205,31 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
   
 
 
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
+<time datetime="2016-04-11T15:07:13+08:00" data-updated="true" itemprop="datePublished">Apr 11 2016</time></div>
 		<div class="tags">
 
 
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
+	<a class='category' href='/blog/categories/iosji-zhu/'>ios技术</a>
 
 
 </div>
 		
 	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread7/" itemprop="url">Test 文章分页</a></h1>
+	<h1 class="title" itemprop="name"><a href="/blog/2016/04/11/iOSwebsite/" itemprop="url">iOS几个很不错的学习网站</a></h1>
 	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
-
-<p><strong>A.信号量来加锁</strong></p>
+		<blockquote><p>最近在重新整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…</p></blockquote>
 
 <ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
-
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
+<li><a href="http://merowing.info/">http://merowing.info/</a></li>
+<li><a href="http://petersteinberger.com/">http://petersteinberger.com/</a></li>
+<li><a href="http://nshipster.com/">http://nshipster.com/</a></li>
+<li>Octopress搭建： <a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/</a></li>
 </ul>
 
 
 
 		
-		<a href="/blog/2016/04/12/thread7/" class="more-link">继续阅读 &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread6/" itemprop="url">Test 文章分页</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
-
-<p><strong>A.信号量来加锁</strong></p>
-
-<ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
-
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
-</ul>
-
-
-
-		
-		<a href="/blog/2016/04/12/thread6/" class="more-link">继续阅读 &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread5/" itemprop="url">Test 文章分页</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
-
-<p><strong>A.信号量来加锁</strong></p>
-
-<ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
-
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
-</ul>
-
-
-
-		
-		<a href="/blog/2016/04/12/thread5/" class="more-link">继续阅读 &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread4/" itemprop="url">Test 文章分页</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
-
-<p><strong>A.信号量来加锁</strong></p>
-
-<ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
-
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
-</ul>
-
-
-
-		
-		<a href="/blog/2016/04/12/thread4/" class="more-link">继续阅读 &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread3/" itemprop="url">Test 文章分页</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
-
-<p><strong>A.信号量来加锁</strong></p>
-
-<ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
-
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
-</ul>
-
-
-
-		
-		<a href="/blog/2016/04/12/thread3/" class="more-link">继续阅读 &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread2/" itemprop="url">Test 文章分页</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
-
-<p><strong>A.信号量来加锁</strong></p>
-
-<ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
-
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
-</ul>
-
-
-
-		
-		<a href="/blog/2016/04/12/thread2/" class="more-link">继续阅读 &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread15/" itemprop="url">Test 文章分页</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
-
-<p><strong>A.信号量来加锁</strong></p>
-
-<ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
-
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
-</ul>
-
-
-
-		
-		<a href="/blog/2016/04/12/thread15/" class="more-link">继续阅读 &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2016-04-12T17:33:39+08:00" data-updated="true" itemprop="datePublished">Apr 12 2016</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/iosduo-xian-cheng/'>ios多线程</a>
-
-
-</div>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2016/04/12/thread14/" itemprop="url">Test 文章分页</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p><strong>线程安全</strong></p>
-
-<p><strong>A.信号量来加锁</strong></p>
-
-<ul>
-<li><p>1.创建信号量，可以设置信号量的资源数。
-<code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);</code></p>
-
-<p>  0表示没有资源，调用dispatch_semaphore_wait会立即等待;如果大于0表示有资源，不需要等待，并获取资源同时资源-1`</p></li>
-<li><p>2.等待信号，可以设置超时参数。
-<code>dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</code></p>
-
-<p>  线程会一直等待信号通知，直到超时。该函数返回0表示得到通知，非0表示超时。</p></li>
-<li><p>3.通知信号
-<code>dispatch_semaphore_signal(semaphore);</code></p>
-
-<p>  发出通知信号，如果等待线程被唤醒则返回非0，否则返回0。</p></li>
-</ul>
-
-
-
-		
-		<a href="/blog/2016/04/12/thread14/" class="more-link">继续阅读 &rarr;</a>
+		<a href="/blog/2016/04/11/iOSwebsite/" class="more-link">继续阅读 &rarr;</a>
 	</div>
 
 </article>
@@ -635,8 +237,6 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 </div>
 <nav id="pagenavi">
     
-    
-        <a href="/posts/2" class="next">下一页</a>
     
     <div class="center"><a href="/blog/archives">所有文章</a></div>
 </nav></div>
