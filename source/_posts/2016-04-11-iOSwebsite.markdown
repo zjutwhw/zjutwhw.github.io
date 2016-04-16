@@ -9,10 +9,12 @@ categories: "iOS技术"
 
 > 最近在重新整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…
 
-+ http://merowing.info/
-+ http://petersteinberger.com/
-+ http://nshipster.com/
-+ Octopress搭建： https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/
++ [iOS架构文章](http://casatwy.com/)
++ [Krzysztof Zabłocki](http://merowing.info/)
++ [petersteinberger](http://petersteinberger.com/)
++ [NSHipster](http://nshipster.com/)
++ [ObjectIO]()
++ [Octopress搭建](https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/)
 
 <!--more-->
 
