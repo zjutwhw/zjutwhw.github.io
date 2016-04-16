@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios技术 | zjutwhw 技术博客]]></title>
   <link href="http://zjutwhw.github.io/blog/categories/iosji-zhu/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-13T13:33:32+08:00</updated>
+  <updated>2016-04-17T00:34:35+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
@@ -21,10 +21,12 @@
     <content type="html"><![CDATA[<blockquote><p>最近在重新整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…</p></blockquote>
 
 <ul>
-<li><a href="http://merowing.info/">http://merowing.info/</a></li>
-<li><a href="http://petersteinberger.com/">http://petersteinberger.com/</a></li>
-<li><a href="http://nshipster.com/">http://nshipster.com/</a></li>
-<li>Octopress搭建： <a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/</a></li>
+<li><a href="http://casatwy.com/">iOS架构文章</a></li>
+<li><a href="http://merowing.info/">Krzysztof Zabłocki</a></li>
+<li><a href="http://petersteinberger.com/">petersteinberger</a></li>
+<li><a href="http://nshipster.com/">NSHipster</a></li>
+<li><a href="">ObjectIO</a></li>
+<li><a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">Octopress搭建</a></li>
 </ul>
 
 

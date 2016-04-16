@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ios | zjutwhw 技术博客]]></title>
+  <link href="http://zjutwhw.github.io/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://zjutwhw.github.io/"/>
+  <updated>2016-04-17T00:34:35+08:00</updated>
+  <id>http://zjutwhw.github.io/</id>
+  <author>
+    <name><![CDATA[zjutwhw]]></name>
+    <email><![CDATA[zjutwhw@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cocoa Touch 框架（一）]]></title>
+    <link href="http://zjutwhw.github.io/blog/2016/03/10/iOS-CocoaTouch/"/>
+    <updated>2016-03-10T10:03:22+08:00</updated>
+    <id>http://zjutwhw.github.io/blog/2016/03/10/iOS-CocoaTouch</id>
+    <content type="html"><![CDATA[<blockquote><p>Cocoa Touch中众多框架中最重要最基本的两个框架是：<code>Foundation</code> 和 <code>UIKit</code>,其中<code>Foundation</code>与界面无关，包含一些最基本的类，而<code>UIKit</code>主要包含与界面相关的基础类。</p></blockquote>
+
+<p><img src="/images/cocoa_frame.jpg" alt="Cocoa框架" /></p>
+
+<!--more-->
+
+
+<hr />
+
+<p><strong>Foundation框架</strong></p>
+
+<p><em>&lt;图中灰色的是iOS不支持的，灰色部分是OS X系统的></em></p>
+
+<p><img src="/images/cocoa_foundation.png" alt="" /></p>
+
+<p>Foundation类组织架构可以按逻辑分类成如下：</p>
+
+<ul>
+<li>值对象</li>
+<li>集合</li>
+<li>操作系统服务
+
+<ul>
+<li>文件系统</li>
+<li>URL</li>
+<li>进程间通讯</li>
+</ul>
+</li>
+<li>通知</li>
+<li>归档和序列化</li>
+<li>表达式和条件判断</li>
+<li>Objective-C语言服务</li>
+</ul>
+
+
+<p><strong>UIKit框架</strong></p>
+
+<p><img src="/images/cocoa_uikit.jpg" alt="" /></p>
+
+<p>其中UIResponder是UIKit中非常重要的一个基类，也是图中最大的分支的根类，UIResponder为Cocoa Touch框架定义了事件响应链，UIKit生成事件通过UIResponder响应链来找到处理事件的对象。其中UIApplication，UIWindow，UIViewController，UIView都是继承至UIResponder，都有可能成为处理事件的对象。</p>
+
+<p><strong>动态语言Object-C</strong></p>
+]]></content>
+  </entry>
+  
+</feed>
