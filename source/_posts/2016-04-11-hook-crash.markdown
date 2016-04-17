@@ -18,7 +18,7 @@ Objective-C为一门动态的语言，OC中的方法调用是利用消息传递�
 
 <!--more-->
 
-```
+```objective-c
 #import <stdio.h>
 void printHello() {
     printf("Hello, world!\n");
@@ -56,7 +56,7 @@ void testDynamicBbinding(int type)
 
 + 第一阶段先征询消息接收者所属的类，看其是否能动态添加方法，以处理当前这个无法响应的 selector，这叫做 `动态方法解析`（dynamic method resolution）。如果运行期系统（runtime system） 第一阶段执行结束，接收者就无法再以动态新增方法的手段来响应消息，进入第二阶段。
 
-```
+```objective-c
 /**
  *  如果尚未实现的方法是实例方法，则调用此函数
  *
@@ -76,7 +76,7 @@ void testDynamicBbinding(int type)
 ```
 方法返回布尔类型，表示是否能新增一个方法来处理 selector，此方案通常用来实现 @dynamic 属性。也可使用虚代理者来处理。
 
-```
+```objective-c
 /************** 使用 resolveInstanceMethod 实现 @dynamic 属性 **************/
 id autoDictionaryGetter(id self, SEL _cmd);
 void autoDictionarySetter(id self, SEL _cmd, id value);
@@ -103,7 +103,7 @@ void autoDictionarySetter(id self, SEL _cmd, id value);
 
 + 第二阶段看看有没有其他对象,`备援接收者`（replacement receiver）能处理此消息。如果有，运行期系统会把消息转发给那个对象，转发过程结束；如果没有，则启动完整的消息转发机制。
 
-```
+```objective-c
 /**
  *  此方法询问是否能将消息转给其他接收者来处理
  *
@@ -118,7 +118,7 @@ void autoDictionarySetter(id self, SEL _cmd, id value);
 
 	如果前面两步都无法处理消息，就会启动完整的消息转发机制。首先创建 NSInvocation 对象，把尚未处理的那条消息有关的全部细节装在里面，在触发 NSInvocation 对象时，消息派发系统（message-dispatch system）将会把消息指派给目标对象。对应的方法为
 	
-```
+```objective-c
 /**
  *  消息派发系统通过此方法，将消息派发给目标对象
  *

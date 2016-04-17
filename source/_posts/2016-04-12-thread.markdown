@@ -31,7 +31,7 @@ categories: iOS多线程
 	
 + 4.Demo ：生产 - 消费
 
-```
+```objective-c
 dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ //消费者队列
       while (condition) {
@@ -55,7 +55,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 + 5.Demo 多线程加锁
 
-```
+```objective-c
 dispatch_semaphore_t semaphore = dispatch_semaphore_create(1); //初始化1个资源
 
 - (void)doTest
@@ -104,7 +104,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 + 5.Demo 以下两种方式是等价的
 
-```
+```objective-c
 //1.group自动管理
 dispatch_group_async(group, queue, ^{ 
 }); 
@@ -123,7 +123,7 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{ //执行完的回调b
 
 `dispatch_barrier_async`是在前面的任务执行结束后它才执行，而且它后面的任务等它执行完成之后才会执行
 
-```
+```objective-c
 dispatch_queue_t queue = dispatch_queue_create("abc.cde.fgh",DISPATCH_QUEUE_CONCURRENT); 
 dispatch_async(queue, ^{  //第一个异步block   });  
 dispatch_async(queue, ^{  //第二个异步block   });   //第一、二个异步block是同步的
