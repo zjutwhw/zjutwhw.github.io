@@ -119,7 +119,7 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -138,25 +138,26 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>dispatch_semaphore_t sem = dispatch_semaphore_create(0);
-</span><span class='line'>dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ //消费者队列
-</span><span class='line'>      while (condition) {
-</span><span class='line'>　　　　  if (dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, 10*NSEC_PER_SEC))) //等待10秒
-</span><span class='line'>　　　　　　continue;
-</span><span class='line'>　　　　//得到数据 并消费。
-</span><span class='line'>　　}
-</span><span class='line'>});
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="kt">dispatch_semaphore_t</span> <span class="n">sem</span> <span class="o">=</span> <span class="n">dispatch_semaphore_create</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="n">DISPATCH_QUEUE_PRIORITY_DEFAULT</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span> <span class="c1">//消费者队列</span>
+</span><span class='line'>      <span class="k">while</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="err">　　　　</span> <span class="k">if</span> <span class="p">(</span><span class="n">dispatch_semaphore_wait</span><span class="p">(</span><span class="n">sem</span><span class="p">,</span> <span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="mi">10</span><span class="o">*</span><span class="n">NSEC_PER_SEC</span><span class="p">)))</span> <span class="c1">//等待10秒</span>
+</span><span class='line'><span class="err">　　　　　　</span><span class="k">continue</span><span class="p">;</span>
+</span><span class='line'><span class="err">　　　　</span><span class="c1">//得到数据 并消费。</span>
+</span><span class='line'><span class="err">　　</span><span class="p">}</span>
+</span><span class='line'><span class="p">});</span>
 </span><span class='line'>
-</span><span class='line'>dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ //生产者队列
-</span><span class='line'>      while (condition) {
-</span><span class='line'> 　　　　if (!dispatch_semaphore_signal(sem)){
-</span><span class='line'>　　　　　　sleep(1); //等1秒再发通知信号，直到有等待线程被唤醒
-</span><span class='line'>　　　　　　continue;
-</span><span class='line'>　　　　}
-</span><span class='line'>　　　　//通知成功
-</span><span class='line'>　　}
+</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="n">DISPATCH_QUEUE_PRIORITY_DEFAULT</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span> <span class="c1">//生产者队列</span>
+</span><span class='line'>      <span class="k">while</span> <span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'> <span class="err">　　　　</span><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">dispatch_semaphore_signal</span><span class="p">(</span><span class="n">sem</span><span class="p">)){</span>
+</span><span class='line'><span class="err">　　　　　　</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">//等1秒再发通知信号，直到有等待线程被唤醒</span>
+</span><span class='line'><span class="err">　　　　　　</span><span class="k">continue</span><span class="p">;</span>
+</span><span class='line'><span class="err">　　　　</span><span class="p">}</span>
+</span><span class='line'><span class="err">　　　　</span><span class="c1">//通知成功</span>
+</span><span class='line'><span class="err">　　</span><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>});</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <ul>
@@ -164,7 +165,7 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -188,30 +189,30 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
 <span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>dispatch_semaphore_t semaphore = dispatch_semaphore_create(1); //初始化1个资源
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="kt">dispatch_semaphore_t</span> <span class="n">semaphore</span> <span class="o">=</span> <span class="n">dispatch_semaphore_create</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="c1">//初始化1个资源</span>
 </span><span class='line'>
-</span><span class='line'>- (void)doTest
-</span><span class='line'>{
-</span><span class='line'>    for (NSInteger index = 0; index &lt; 10; index++)
-</span><span class='line'>    {
-</span><span class='line'>dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ 
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">doTest</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="bp">NSInteger</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">index</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">dispatch_get_global_queue</span><span class="p">(</span><span class="n">DISPATCH_QUEUE_PRIORITY_DEFAULT</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="o">^</span><span class="p">{</span>
 </span><span class='line'>
-</span><span class='line'>              [self lock];
-</span><span class='line'>              // 访问公共存储区数据、同一时刻只有一个线程可以操作这些数据。
-</span><span class='line'>              sleep(3);
-</span><span class='line'>              [self unLock];
-</span><span class='line'>          });
-</span><span class='line'>    }
-</span><span class='line'>}
+</span><span class='line'>              <span class="p">[</span><span class="nb">self</span> <span class="n">lock</span><span class="p">];</span>
+</span><span class='line'>              <span class="c1">// 访问公共存储区数据、同一时刻只有一个线程可以操作这些数据。</span>
+</span><span class='line'>              <span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span class='line'>              <span class="p">[</span><span class="nb">self</span> <span class="n">unLock</span><span class="p">];</span>
+</span><span class='line'>          <span class="p">});</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>- (void)lock
-</span><span class='line'>{
-</span><span class='line'>    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-</span><span class='line'>}
-</span><span class='line'>- (void)unLock
-</span><span class='line'>{
-</span><span class='line'>    dispatch_semaphore_signal(semaphore);
-</span><span class='line'>}
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">lock</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">dispatch_semaphore_wait</span><span class="p">(</span><span class="n">semaphore</span><span class="p">,</span> <span class="n">DISPATCH_TIME_FOREVER</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">unLock</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">dispatch_semaphore_signal</span><span class="p">(</span><span class="n">semaphore</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -239,7 +240,7 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -251,34 +252,36 @@ dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); 0表示没有资�
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//1.group自动管理
-</span><span class='line'>dispatch_group_async(group, queue, ^{ 
-</span><span class='line'>}); 
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="c1">//1.group自动管理</span>
+</span><span class='line'><span class="n">dispatch_group_async</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'><span class="p">});</span>
 </span><span class='line'>
-</span><span class='line'>//2.group手动管理
-</span><span class='line'>dispatch_group_enter(group);  // +1
-</span><span class='line'>dispatch_async(queue, ^{
-</span><span class='line'>　　dispatch_group_leave(group);  // -1
-</span><span class='line'>});
+</span><span class='line'><span class="c1">//2.group手动管理</span>
+</span><span class='line'><span class="n">dispatch_group_enter</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>  <span class="c1">// +1</span>
+</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'><span class="err">　　</span><span class="n">dispatch_group_leave</span><span class="p">(</span><span class="n">group</span><span class="p">);</span>  <span class="c1">// -1</span>
+</span><span class='line'><span class="p">});</span>
 </span><span class='line'>
-</span><span class='line'>//阻塞了，直到group关联的block执行完。(想想成group计数为0时才执行)
-</span><span class='line'>dispatch_group_notify(group, dispatch_get_main_queue(), ^{ //执行完的回调block });</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="c1">//阻塞了，直到group关联的block执行完。(想想成group计数为0时才执行)</span>
+</span><span class='line'><span class="n">dispatch_group_notify</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dispatch_get_main_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span> <span class="c1">//执行完的回调block });</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p><strong>C.<code>dispatch_barrier_async</code> （barrier：栅栏）</strong></p>
 
 <p><code>dispatch_barrier_async</code>是在前面的任务执行结束后它才执行，而且它后面的任务等它执行完成之后才会执行</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>dispatch_queue_t queue = dispatch_queue_create("abc.cde.fgh",DISPATCH_QUEUE_CONCURRENT); 
-</span><span class='line'>dispatch_async(queue, ^{  //第一个异步block   });  
-</span><span class='line'>dispatch_async(queue, ^{  //第二个异步block   });   //第一、二个异步block是同步的
-</span><span class='line'>dispatch_barrier_async(queue, ^{ //第三个异步block   });   //等第一和第二个异步block执行完才执行第三个block
-</span><span class='line'>dispatch_async(queue, ^{  //第四个异步block   });   //必须等第三个block执行完才执行第四、五、六个block</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="kt">dispatch_queue_t</span> <span class="n">queue</span> <span class="o">=</span> <span class="n">dispatch_queue_create</span><span class="p">(</span><span class="s">&quot;abc.cde.fgh&quot;</span><span class="p">,</span><span class="n">DISPATCH_QUEUE_CONCURRENT</span><span class="p">);</span>
+</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>  <span class="c1">//第一个异步block   });  </span>
+</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>  <span class="c1">//第二个异步block   });   //第一、二个异步block是同步的</span>
+</span><span class='line'><span class="n">dispatch_barrier_async</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span> <span class="c1">//第三个异步block   });   //等第一和第二个异步block执行完才执行第三个block</span>
+</span><span class='line'><span class="n">dispatch_async</span><span class="p">(</span><span class="n">queue</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>  <span class="c1">//第四个异步block   });   //必须等第三个block执行完才执行第四、五、六个block</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 

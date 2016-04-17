@@ -4,7 +4,7 @@
   <title><![CDATA[Category: runtime | zjutwhw 技术博客]]></title>
   <link href="http://zjutwhw.github.io/blog/categories/runtime/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-17T00:34:35+08:00</updated>
+  <updated>2016-04-17T22:26:52+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
@@ -31,7 +31,7 @@
 <!--more-->
 
 
-<pre><code>#import &lt;stdio.h&gt;
+<pre><code class="objective-c">#import &lt;stdio.h&gt;
 void printHello() {
     printf("Hello, world!\n");
 }
@@ -71,7 +71,7 @@ void testDynamicBbinding(int type)
 </ul>
 
 
-<pre><code>/**
+<pre><code class="objective-c">/**
  *  如果尚未实现的方法是实例方法，则调用此函数
  *
  *  @param selector 未处理的方法
@@ -91,7 +91,7 @@ void testDynamicBbinding(int type)
 
 <p>方法返回布尔类型，表示是否能新增一个方法来处理 selector，此方案通常用来实现 @dynamic 属性。也可使用虚代理者来处理。</p>
 
-<pre><code>/************** 使用 resolveInstanceMethod 实现 @dynamic 属性 **************/
+<pre><code class="objective-c">/************** 使用 resolveInstanceMethod 实现 @dynamic 属性 **************/
 id autoDictionaryGetter(id self, SEL _cmd);
 void autoDictionarySetter(id self, SEL _cmd, id value);
 + (BOOL)resolveInstanceMethod:(SEL)selector
@@ -120,7 +120,7 @@ void autoDictionarySetter(id self, SEL _cmd, id value);
 </ul>
 
 
-<pre><code>/**
+<pre><code class="objective-c">/**
  *  此方法询问是否能将消息转给其他接收者来处理
  *
  *  @param aSelector 未处理的方法
@@ -137,7 +137,7 @@ void autoDictionarySetter(id self, SEL _cmd, id value);
 </ul>
 
 
-<pre><code>/**
+<pre><code class="objective-c">/**
  *  消息派发系统通过此方法，将消息派发给目标对象
  *
  *  @param anInvocation 之前创建的NSInvocation实例对象，用于装载有关消息的所有内容

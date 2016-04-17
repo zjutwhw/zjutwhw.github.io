@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios | zjutwhw 技术博客]]></title>
   <link href="http://zjutwhw.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-17T00:34:35+08:00</updated>
+  <updated>2016-04-17T22:26:52+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
@@ -60,6 +60,15 @@
 <p>其中UIResponder是UIKit中非常重要的一个基类，也是图中最大的分支的根类，UIResponder为Cocoa Touch框架定义了事件响应链，UIKit生成事件通过UIResponder响应链来找到处理事件的对象。其中UIApplication，UIWindow，UIViewController，UIView都是继承至UIResponder，都有可能成为处理事件的对象。</p>
 
 <p><strong>动态语言Object-C</strong></p>
+
+<p>Object-C是一门动态语言，相比其他语言(Java,C,C++)，它的动态特性主要表现如下三点：</p>
+
+<ul>
+<li>动态类：运行时确定类的对象</li>
+<li>动态绑定：运行时确定要调用的方法</li>
+<li>动态加载：运行时为程序加载新的模块</li>
+</ul>
+
 ]]></content>
   </entry>
   

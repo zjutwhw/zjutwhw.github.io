@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios多线程 | zjutwhw 技术博客]]></title>
   <link href="http://zjutwhw.github.io/blog/categories/iosduo-xian-cheng/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-17T00:34:35+08:00</updated>
+  <updated>2016-04-17T22:26:52+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
@@ -46,7 +46,7 @@
 </ul>
 
 
-<pre><code>dispatch_semaphore_t sem = dispatch_semaphore_create(0);
+<pre><code class="objective-c">dispatch_semaphore_t sem = dispatch_semaphore_create(0);
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{ //消费者队列
       while (condition) {
 　　　　    if (dispatch_semaphore_wait(sem, dispatch_time(DISPATCH_TIME_NOW, 10*NSEC_PER_SEC))) //等待10秒
@@ -72,7 +72,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 </ul>
 
 
-<pre><code>dispatch_semaphore_t semaphore = dispatch_semaphore_create(1); //初始化1个资源
+<pre><code class="objective-c">dispatch_semaphore_t semaphore = dispatch_semaphore_create(1); //初始化1个资源
 
 - (void)doTest
 {
@@ -122,7 +122,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 </ul>
 
 
-<pre><code>//1.group自动管理
+<pre><code class="objective-c">//1.group自动管理
 dispatch_group_async(group, queue, ^{ 
 }); 
 
@@ -140,7 +140,7 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{ //执行完的回调b
 
 <p><code>dispatch_barrier_async</code>是在前面的任务执行结束后它才执行，而且它后面的任务等它执行完成之后才会执行</p>
 
-<pre><code>dispatch_queue_t queue = dispatch_queue_create("abc.cde.fgh",DISPATCH_QUEUE_CONCURRENT); 
+<pre><code class="objective-c">dispatch_queue_t queue = dispatch_queue_create("abc.cde.fgh",DISPATCH_QUEUE_CONCURRENT); 
 dispatch_async(queue, ^{  //第一个异步block   });  
 dispatch_async(queue, ^{  //第二个异步block   });   //第一、二个异步block是同步的
 dispatch_barrier_async(queue, ^{ //第三个异步block   });   //等第一和第二个异步block执行完才执行第三个block
