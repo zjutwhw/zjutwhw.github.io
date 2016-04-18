@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://zjutwhw.github.io/blog/2016/04/18/ios-debuger/</loc>
+<lastmod>2016-04-18T16:47:32+08:00</lastmod>
+</url>
+<url>
 <loc>http://zjutwhw.github.io/blog/2016/04/12/thread/</loc>
 <lastmod>2016-04-12T17:33:39+08:00</lastmod>
 </url>
@@ -29,7 +33,7 @@
 <loc>http://zjutwhw.github.io/blog/categories/ios/</loc>
 </url>
 <url>
-<loc>http://zjutwhw.github.io/blog/categories/iosji-zhu/</loc>
+<loc>http://zjutwhw.github.io/blog/categories/ji-zhu-xue-xi/</loc>
 </url>
 <url>
 <loc>http://zjutwhw.github.io/blog/categories/runtime/</loc>

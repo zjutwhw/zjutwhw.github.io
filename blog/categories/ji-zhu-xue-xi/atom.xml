@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: ios技术 | zjutwhw 技术博客]]></title>
-  <link href="http://zjutwhw.github.io/blog/categories/iosji-zhu/atom.xml" rel="self"/>
+  <title><![CDATA[Category: 技术学习 | zjutwhw 技术博客]]></title>
+  <link href="http://zjutwhw.github.io/blog/categories/ji-zhu-xue-xi/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-17T22:26:52+08:00</updated>
+  <updated>2016-04-18T18:30:00+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
@@ -18,14 +18,15 @@
     <link href="http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite/"/>
     <updated>2016-04-11T15:07:13+08:00</updated>
     <id>http://zjutwhw.github.io/blog/2016/04/11/iOSwebsite</id>
-    <content type="html"><![CDATA[<blockquote><p>最近在重新整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…</p></blockquote>
+    <content type="html"><![CDATA[<blockquote><p>记录一些自己觉得好的一些技术博客，没事膜拜膜拜！</p></blockquote>
 
 <ul>
 <li><a href="http://casatwy.com/">iOS架构文章</a></li>
+<li><a href="https://blog.cnbluebox.com/">刘坤大神</a></li>
 <li><a href="http://merowing.info/">Krzysztof Zabłocki</a></li>
 <li><a href="http://petersteinberger.com/">petersteinberger</a></li>
 <li><a href="http://nshipster.com/">NSHipster</a></li>
-<li><a href="">ObjectIO</a></li>
+<li><a href="http://objccn.io/">Objc中国</a> &amp; <a href="https://www.objc.io/issues/">Objc.io</a></li>
 <li><a href="https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/">Octopress搭建</a></li>
 </ul>
 
