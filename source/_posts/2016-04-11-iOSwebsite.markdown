@@ -4,16 +4,18 @@ title: "iOS几个很不错的学习网站"
 description: "iOS几个很不错的学习网站"
 date: 2016-04-11 15:07:13 +0800
 comments: true  
-categories: "iOS技术"  
+categories: "技术学习"  
 ---
 
-> 最近在重新整理自己的一些工作笔记，总结下工作中踩的坑并分享给其他小伙伴，希望不要踩同样的坑，待更新…
+
+> 记录一些自己觉得好的一些技术博客，没事膜拜膜拜！
 
 + [iOS架构文章](http://casatwy.com/)
++ [刘坤大神](https://blog.cnbluebox.com/)
 + [Krzysztof Zabłocki](http://merowing.info/)
 + [petersteinberger](http://petersteinberger.com/)
 + [NSHipster](http://nshipster.com/)
-+ [ObjectIO]()
++ [Objc中国](http://objccn.io/) & [Objc.io](https://www.objc.io/issues/)
 + [Octopress搭建](https://shengmingzhiqing.com/blog/octopress-lean-modification-1.html/)
 
 <!--more-->
