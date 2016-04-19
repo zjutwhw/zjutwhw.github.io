@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ios | zjutwhw 技术博客]]></title>
   <link href="http://zjutwhw.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://zjutwhw.github.io/"/>
-  <updated>2016-04-18T18:30:00+08:00</updated>
+  <updated>2016-04-19T14:46:23+08:00</updated>
   <id>http://zjutwhw.github.io/</id>
   <author>
     <name><![CDATA[zjutwhw]]></name>
@@ -18,13 +18,18 @@
     <link href="http://zjutwhw.github.io/blog/2016/04/18/ios-debuger/"/>
     <updated>2016-04-18T16:47:32+08:00</updated>
     <id>http://zjutwhw.github.io/blog/2016/04/18/ios-debuger</id>
-    <content type="html"><![CDATA[<p><strong>LLDB</strong></p>
+    <content type="html"><![CDATA[<p><strong>LLDB Debuger</strong></p>
 
 <blockquote><p>LLDB是LLVM下的调试器，从Xcode5.0开始apple就开始将原来的gdb改为LLDB了，为所有的工程自动设置LLDB进行调试。本文总结下日常开发中使用到的一些LLDB命令，并如何使用Facebook开源的LLDB插件Chisel进行调试，提高我们开发过程中的开发效率。</p></blockquote>
+
+<p><strong>LLDB 常用命令</strong></p>
+
+<p>执行类命令集</p>
 
 <p>参考：</p>
 
 <ul>
+<li><a href="http://lldb.llvm.org/lldb-gdb.html">The LLDB Debugger</a></li>
 <li><a href="http://blog.163.com/l1_jun/blog/static/14386388201210202355254/">LLDB &amp; GDB 内置命令对比</a></li>
 <li><a href="http://www.starfelix.com/blog/2014/03/17/lldbdiao-shi-ming-ling-chu-tan/">LLDB调试命令初探</a></li>
 <li><a href="https://blog.cnbluebox.com/blog/2015/03/05/chisel/">Chisel-LLDB命令插件，让调试更Easy</a></li>
